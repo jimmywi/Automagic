@@ -29,10 +29,36 @@ class driverChrome(metaclass=Singleton):
         wait = WebDriverWait(self.driver,10)
         element = wait.until(EC.presence_of_element_located((By.NAME, elementID)))
 
+class XCommand():
+    def __init__(self):
+        def open(cm):
+            print("Open: %s" % cm['input'])
+        def path(cm):
+            print("Path: %s" % cm['input'])
+        def textbox(cm):
+            print("Textbox: %s" % cm['input'])
+        def getelems(cm):
+            print("Elements: %s" % cm['input'])
+        def getelem(cm):
+            print("Ekement: %s" % cm['input'])
+        def scroll(cm):
+            print("Sroll: %s" % cm['input'])
+        def submit(cm):
+            print("Submit: %s" % cm['input'])
+        def click(cm):
+            print("Click: %s" % cm['input'])
+        self.func_list = vars()
+    def execute(self,cm):
+        self.func_list[cm['type']](cm)
+    def __del__(self):
+        self.func_list = None
+
 class app:
     def __init__(self):
         pass
     def run(self):
+        xc = XCommand()
+        xc.execute({'type':'open', 'input':'https://google.com'})
         driver = driverChrome().getInstance()
         print(hex(id(driver)))
         driver.get('http://www.google.com/xhtml')
