@@ -1,0 +1,33 @@
+<CustButton@Button>:
+    font_size: 32
+
+<CustomGrid>:
+    id: test
+    display: entry
+    rows: 2
+    padding: 10
+    spacing: 10
+ 
+    BoxLayout:
+        size_hint_y: None
+        height: 32 
+        TextInput:
+            id: entry
+            size_hint_y: None
+            height: 32 
+            multiline: False
+
+    BoxLayout:
+        spacing: 10
+        CustButton:
+            text: "1"
+            on_press: entry.text += self.text
+        CustButton:
+            text: "8"
+            on_press: entry.text += self.text
+        CustButton:
+            text: "9"
+            on_press: entry.text += self.text
+        CustButton:
+            text: "+"
+            on_press: entry.text += self.text
