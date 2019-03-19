@@ -1,0 +1,11 @@
+name: selenv
+channels:
+        - conda-forge
+        - defaults
+dependencies:
+        - python=3.6
+        - selenium=3.141.0
+        - sqlite=3.13
+        - readline=6.2
+        - tk=8.5
+        - kivy=1.10.1
