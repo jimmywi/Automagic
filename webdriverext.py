@@ -5,12 +5,24 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
 class WebDriverChromeExt(webdriver.Chrome):
+    def __init__( self, path ):
+        webdriver.Chrome.__init__( self, path )
+        self.elementList = {}
 
-    def setElementList(self, elementID, tagID):
-        pass
+    def setElementList(self, tagID, elementID):
+        self.elementList[tagID] = self.find_element_by_name(elementID)
+        for k, v in self.elementList.items():
+            print(k, v)
 
     def getElementList(self, tagID):
-        pass
+        return self.elementID[tagID]
+ 
+    def clearElementList(self):
+        del self.elementID
+
+    def injectText(self, tagID, query):
+        js_syntax = "(document.evaluate('" + self.elementID[tagID] + "', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue).value='"+query+"';"
+        self.execute_script(js_syntax)
 
     def waitUntilClickable(self, elementID):
         print("Wait until clickable") 
@@ -32,10 +44,8 @@ class Singleton(type):
 class ChromeDriverExt(metaclass=Singleton):
     def __init__(self):
         self.driver = None 
-        self.elementList = []
     def getInstance(self):
         if self.driver == None:
             chrome_path = '/Users/jimmy/Developer/Automagic/chromedriver'
             self.driver = WebDriverChromeExt(chrome_path)
         return self.driver
-

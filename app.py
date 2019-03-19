@@ -13,8 +13,9 @@ class XCommand():
             print("Path: %s" % cm['input'])
         def textbox(cm):
             print("Textbox: %s" % cm['input'])
-        def getelems(cm):
+        def setelem(cm):
             print("Elements: %s" % cm['input'])
+            driver.setElementList(cm['input'], cm['value'])
         def getelem(cm):
             print("Element: %s" % cm['input'])
         def scroll(cm):
@@ -38,6 +39,7 @@ class app:
         self.list = []
         self.list.append({'type':'open', 'input':'https://google.com'})
         self.list.append({'type':'wait','input':'q'})
+        self.list.append({'type':'setelem','input':'search_box','value':'q'})
     def run(self):
         driver = ChromeDriverExt().getInstance()
         xc = XCommand()
