@@ -21,7 +21,15 @@ class WebDriverChromeExt(webdriver.Chrome):
         del self.elementList
 
     def injectText(self, cm):
-        js_syntax = "(document.evaluate('" + self.elementList[cm['object']] + "', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue).value='"+ cm['value']  +"';"
+        js_syntax = """
+        (document.evaluate('%s',
+        document,
+        null,
+        XPathResult.FIRST_ORDERED_NODE_TYPE,
+        null).singleNodeValue)
+        .value='%s';
+        """ 
+        js_syntax = js_syntax % (self.elementList[cm['object']], cm['value'])
         self.execute_script(js_syntax)
 
     def waitUntilClickable(self, cm):
