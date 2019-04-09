@@ -1,0 +1,16 @@
+<root>
+	<page name="overview" url="http://www.google.com">
+		<elements>
+			<element name='searchbox'>//input[@name="q"]</element>
+			<element name='submitbutton'>//button[@name="s"]</element>
+			<element name='list'>//list</element>
+		</elements>
+	</page>
+	<page name="services" url="http://www.youtube.com">
+		<elements>
+			<element name='searchbox'>//input[@name="q"]</element>
+			<element name='submitbutton'>//button[@name="s"]</element>
+			<element name='list'>//list</element>
+		</elements>
+	</page>
+</root>
