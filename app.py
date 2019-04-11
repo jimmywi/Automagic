@@ -14,10 +14,8 @@ class app(threading.Thread):
         self.xc = WebCommand()
         self.list = []
         self.list.append({'page':'overview','event':'open','object':'null','value':'null'})
-        self.list.append({'page':'overview','event':'wait','object':'searchbox','value':'null'})
         self.list.append({'page':'overview','event':'inject','object':'searchbox','value':'Hello World'})
         self.list.append({'page':'overview','event':'submit','object':'searchbox','value':'null'})
-        self.list.append({'page':'overview','event':'wait','object':'searchbox','value':'null'})
         self.list.append({'page':'services','event':'open','object':'null','value':'null'})
 
     def run(self):
@@ -37,7 +35,7 @@ class xmlTemplateParser():
     def load(self, f):
         e = ET.parse(f)
         root = e.getroot()
-        for page in root.findall('page'):
+        for page in root.find('pages'):
             print(page.get('name'))
             self.xc.execute({'event':'addpage','page':page.get('name'),'url':page.get('url')})
             for element in page.find('elements'):

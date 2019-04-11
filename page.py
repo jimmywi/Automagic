@@ -11,3 +11,9 @@ class Page():
         return self.elements
     def get_url(self):
         return self.url
+
+class Action():
+    def __init__(self,c):
+        pass
+    def add_action(self,c):
+        pass
