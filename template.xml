@@ -16,9 +16,9 @@
         </page>
     </pages>
     <actions>
-        <action page="overview" element="null">url</action>
+        <action page="overview" element="null">open</action>
         <action page="overview" element="searchbox">inject</action>
         <action page="overview" element="searchbox">submit</action>
-        <action page="services" element="null">url</action>
+        <action page="services" element="null">open</action>
     </actions>
 </root>

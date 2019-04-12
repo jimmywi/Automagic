@@ -12,16 +12,13 @@ class app(threading.Thread):
         threading.Thread.__init__(self)
         self._event = threading.Event()
         self.xc = WebCommand()
-        self.list = []
-        self.list.append({'page':'overview','event':'open','object':'null','value':'null'})
-        self.list.append({'page':'overview','event':'inject','object':'searchbox','value':'Hello World'})
-        self.list.append({'page':'overview','event':'submit','object':'searchbox','value':'null'})
-        self.list.append({'page':'services','event':'open','object':'null','value':'null'})
+        self.list = self.xc.execute({'event':'getevent'})
 
     def run(self):
-        for cm in self.list:
-            self._event.wait()
-            self.xc.execute(cm)
+        pass
+        #for cm in self.list:
+        #    self._event.wait()
+        #    self.xc.execute(cm)
 
     def pause(self):
         self._event.clear()
@@ -41,6 +38,10 @@ class xmlTemplateParser():
             for element in page.find('elements'):
                 print("- %s: %s: %s" % (page.get('name'), element.get('name'), element.text))
                 self.xc.execute({'page':page.get('name'),'event':'addelement','object':element.get('name'),'value':element.text})
+        
+        for action in root.find('actions'):
+            print(action.get('page'), action.get('element'), action.text)
+            self.xc.execute({'event':action.text,'page':action.get('page'),'object':action.get('element'),'value':'Hello World'})
 
 if __name__ == "__main__":
     template = xmlTemplateParser()

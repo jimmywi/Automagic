@@ -3,6 +3,10 @@ from webdriverext import ChromeDriverExt
 class WebCommand():
     def __init__(self):
         driver = ChromeDriverExt().getInstance()
+        def addevent(cm):
+            driver.add_events(cm)
+        def getevent(cm):
+            return driver.get_events()
         def open(cm):
             print("Open: %s" % cm['page'])
             driver.get(driver.get_page(cm))

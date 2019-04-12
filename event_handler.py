@@ -14,6 +14,8 @@ class Page():
 
 class Action():
     def __init__(self,c):
-        pass
+        self.events = []
     def add_action(self,c):
         pass
+    def get_action(self):
+        return self.events
