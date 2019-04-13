@@ -2,8 +2,8 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
-from event_handler import Page
-from event_handler import Action
+from eventhandler import Page
+from eventhandler import Action
 
 class WebDriverChromeExt(webdriver.Chrome):
     def __init__( self, path ):
