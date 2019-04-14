@@ -14,11 +14,21 @@
                 <element name='list'>//list</element>
             </elements>
         </page>
+        <page name="reddit" url="http://www.reddit.com">
+            <elements>
+                <element name='searchbox'>//input[@name="q"]</element>
+                <element name='submitbutton'>//button[@name="s"]</element>
+                <element name='list'>//list</element>
+            </elements>
+        </page>
     </pages>
     <actions>
         <action page="overview" element="null">open</action>
         <action page="overview" element="searchbox">inject</action>
         <action page="overview" element="searchbox">submit</action>
+        <action page="overview" element="searchbox">inject</action>
+        <action page="overview" element="searchbox">submit</action>
         <action page="services" element="null">open</action>
+        <action page="reddit" element="null">open</action>
     </actions>
 </root>
