@@ -3,39 +3,24 @@ from webdriverext import ChromeDriverExt
 class WebCommand():
     def __init__(self):
         driver = ChromeDriverExt().getInstance()
-        def addevent(cm):
-            driver.add_events(cm)
-        def getevent(cm):
-            return driver.get_events()
-        def open(cm):
-            print("Open: %s" % cm['page'])
-            driver.get(driver.get_page(cm))
-        def addpage(cm):
-            print("Page: %s" % (cm['page']) )
-            driver.add_page(cm)
-        def getpage(cm):
-            print("Page: %s" % (cm['page']) )
-            driver.get_page(cm)
-        def addelement(cm):
-            print("Page: %s Object: %s Value: %s" % (cm['page'],cm['object'],cm['value']) )
-            driver.add_element(cm)
-        def getelement(cm):
-            print("Page: %s" % cm['object'])
-        def scroll(cm):
-            print("Scroll: %s" % cm['object'])
-        def submit(cm):
-            print("Submit: %s" % cm['object'])
-            driver.do_submit(cm)
-        def inject(cm):
-            driver.inject_text(cm)
-        def click(cm):
-            print("Click: %s" % cm['object'])
-            driver.wait_until_clickable(cm)
-        def wait(cm):
-            print("Wait: %s" % cm['object'])
-            driver.wait_until_element_located(cm)
+        def open(c):
+            print("Open: %s" % c['page'])
+            driver.open_url(c)
+        def scroll(c):
+            print("Scroll: %s" % c['object'])
+        def submit(c):
+            print("Submit: %s" % c['object'])
+            driver.do_submit(c)
+        def inject(c):
+            driver.inject_text(c)
+        def click(c):
+            print("Click: %s" % c['object'])
+            driver.wait_until_clickable(c)
+        def wait(c):
+            print("Wait: %s" % c['object'])
+            driver.wait_until_element_located(c)
         self.func_list = vars()
-    def execute(self,cm):
-        self.func_list[cm['event']](cm)
+    def execute(self,c):
+        self.func_list[c['event']](c)
     def __del__(self):
         self.func_list = None

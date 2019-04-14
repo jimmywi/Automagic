@@ -1,24 +1,24 @@
 #!/Users/jimmy/miniconda3/envs/selenv/bin/python
 #coding: utf-8
+
+import time
 import threading
+import xml.etree.ElementTree as ET
+
 from webdriverext import ChromeDriverExt 
 from seleniumcommand import WebCommand
-import csv
-import time
-import xml.etree.ElementTree as ET
+from eventhandler import EventHandler
 
 class app(threading.Thread):
     def __init__(self):
         threading.Thread.__init__(self)
         self._event = threading.Event()
         self.xc = WebCommand()
-        self.list = self.xc.execute({'event':'getevent'})
+        self.list = eh.get_actions() 
 
     def run(self):
-        pass
-        #for cm in self.list:
-        #    self._event.wait()
-        #    self.xc.execute(cm)
+        for c in self.list:
+            self.xc.execute(c)
 
     def pause(self):
         self._event.clear()
@@ -28,30 +28,29 @@ class app(threading.Thread):
 
 class xmlTemplateParser():
     def __init__(self):
-        self.xc = WebCommand()
+        pass
     def load(self, f):
         e = ET.parse(f)
         root = e.getroot()
         for page in root.find('pages'):
-            print(page.get('name'))
-            self.xc.execute({'event':'addpage','page':page.get('name'),'url':page.get('url')})
+            eh.add_page({'page':page.get('name'),'url':page.get('url')})
             for element in page.find('elements'):
-                print("- %s: %s: %s" % (page.get('name'), element.get('name'), element.text))
-                self.xc.execute({'page':page.get('name'),'event':'addelement','object':element.get('name'),'value':element.text})
-        
+                eh.add_page_element({'page':page.get('name'),'object':element.get('name'),'value':element.text})
         for action in root.find('actions'):
             print(action.get('page'), action.get('element'), action.text)
-            self.xc.execute({'event':action.text,'page':action.get('page'),'object':action.get('element'),'value':'Hello World'})
+            eh.add_action({'event':action.text,'page':action.get('page'),'object':action.get('element'),'value':'Hello World'})
+
+eh = EventHandler()
 
 if __name__ == "__main__":
     template = xmlTemplateParser()
     template.load('template.xml')
     web = ChromeDriverExt().getInstance()
+    web.set_pages(eh.get_pages())
     print(hex(id(web)))
     ap = app()
     ap.resume()
     ap.start()
     ap.join()
-    time.sleep(5)
     web.close()
     web.quit()
