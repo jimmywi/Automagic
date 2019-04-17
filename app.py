@@ -1,9 +1,10 @@
 #!/Users/jimmy/miniconda3/envs/selenv/bin/python
-#coding: utf-8
+# -*- coding: utf-8  -*-
 
 import time
 import threading
 import xml.etree.ElementTree as ET
+import pandas as pd
 
 from webdriverext import ChromeDriverExt 
 from seleniumcommand import WebCommand
@@ -29,16 +30,51 @@ class app(threading.Thread):
 class xmlTemplateParser():
     def __init__(self):
         pass
+
     def load(self, f):
         e = ET.parse(f)
         root = e.getroot()
+        pf = pd.read_csv("template.csv", index_col="id")
+
         for page in root.find('pages'):
-            eh.add_page({'page':page.get('name'),'url':page.get('url')})
+            eh.add_page(
+                {
+                    'page':page.get('name'),
+                    'url':page.get('url')
+                }
+            )
+
             for element in page.find('elements'):
-                eh.add_page_element({'page':page.get('name'),'object':element.get('name'),'value':element.text})
-        for action in root.find('actions'):
-            print(action.get('page'), action.get('element'), action.text)
-            eh.add_action({'event':action.text,'page':action.get('page'),'object':action.get('element'),'value':'Hello World'})
+                eh.add_page_element(
+                    {
+                        'page':page.get('name'),
+                        'object':element.get('name'),
+                        'value':element.text
+                    }
+                )
+
+        for index, row in pf.iterrows():
+
+            for action in root.find('actions'):
+
+                if(action.text is None):
+                    eh.add_action(
+                        {
+                            'event':action.get('event'),
+                            'page':action.get('page'),
+                            'object':action.get('element')
+                        }
+                    )
+
+                else:
+                    eh.add_action(
+                        {
+                            'event':action.get('event'),
+                            'page':action.get('page'),
+                            'object':action.get('element'),
+                            'value': row[action.text]
+                        }
+                    )
 
 eh = EventHandler()
 
