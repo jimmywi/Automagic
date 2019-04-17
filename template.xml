@@ -1,34 +1,32 @@
 <root>
     <pages>
-	<page name="overview" url="http://www.google.com">
+	<page name="google" url="http://www.google.com">
             <elements>
 		<element name='searchbox'>//input[@name="q"]</element>
                 <element name='submitbutton'>//button[@name="s"]</element>
 		<element name='list'>//list</element>
             </elements>
         </page>
-        <page name="services" url="http://www.youtube.com">
+        <page name="youtube" url="http://www.youtube.com">
             <elements>
-                <element name='searchbox'>//input[@name="q"]</element>
-                <element name='submitbutton'>//button[@name="s"]</element>
+		<element name='searchbox'>//input[@id="search"]</element>
+                <element name='submitbutton'>//input[@id="search"]</element>
                 <element name='list'>//list</element>
             </elements>
         </page>
         <page name="reddit" url="http://www.reddit.com">
             <elements>
                 <element name='searchbox'>//input[@name="q"]</element>
-                <element name='submitbutton'>//button[@name="s"]</element>
-                <element name='list'>//list</element>
             </elements>
         </page>
     </pages>
     <actions>
-        <action page="overview" element="null">open</action>
-        <action page="overview" element="searchbox">inject</action>
-        <action page="overview" element="searchbox">submit</action>
-        <action page="overview" element="searchbox">inject</action>
-        <action page="overview" element="searchbox">submit</action>
-        <action page="services" element="null">open</action>
-        <action page="reddit" element="null">open</action>
+        <action page="google" element="null"      event="open"></action>
+        <action page="google" element="searchbox" event="inject">name</action>
+        <action page="google" element="searchbox" event="submit"></action>
+        <action page="youtube" element="null" event="open"></action>
+        <action page="youtube" element="searchbox" event="inject">name</action>
+        <action page="youtube" element="submitbutton" event="submit"></action>
+        <action page="reddit"   element="null"      event="open"></action>
     </actions>
 </root>
